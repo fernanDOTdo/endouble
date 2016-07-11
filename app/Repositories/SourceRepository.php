@@ -3,7 +3,7 @@
 namespace App\Repositories;
 
 use App\Source;
-use Storage;
+use Cache;
 
 /**
  * Source Repository
@@ -19,7 +19,7 @@ class SourceRepository implements SourceRepositoryInterface
     public function getSources()
     {
         $sources = Cache::get('source.all', function() {
-            $allSources = Source::all()->sortByAsc("priority");
+            $allSources = Source::orderBy('priority')->get();
             if($allSources){
                 $classSources = [];
                 foreach ($allSources as $source){

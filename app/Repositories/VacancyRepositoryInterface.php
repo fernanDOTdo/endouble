@@ -47,7 +47,7 @@ interface VacancyRepositoryInterface
      * Search for a vacancy
      *
      * @param int
-     * @param array
+     * @return array
      */
     public function search($query);
 }

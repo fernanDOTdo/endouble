@@ -56,7 +56,7 @@
 
                             <ul class="dropdown-menu" role="menu">
                                 <li><a href="{{ url('/vacancies') }}"><i class="fa fa-btn fa-briefcase"></i>All Vacancies</a></li>
-                                <li><a href="{{ url('/vacancies/add') }}"><i class="fa fa-btn fa-plus-circle"></i>Add Vacancy</a></li>
+                                <li><a href="{{ url('/vacancies/create') }}"><i class="fa fa-btn fa-plus-circle"></i>Add Vacancy</a></li>
                             </ul>
                         </li>
                         <li><a href="{{ url('/sources') }}">Sources</a></li>
@@ -115,5 +115,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.3/jquery.min.js" integrity="sha384-I6F5OKECLVtK/BL+8iSLDEHowSAfUo76ZL9+kGAgTRdiByINKJaqTPH/QVNS1VDb" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    @yield('footer_scripts')
 </body>
 </html>

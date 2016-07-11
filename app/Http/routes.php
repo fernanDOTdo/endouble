@@ -32,7 +32,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('sources', 'SourceController', ['only' => ['index', 'edit', 'update']]);
     Route::get('sources/refresh', ['uses' => 'SourceController@refresh', 'as' => 'sources.refresh']);
 
-    Route::get('/vacancies', function () {
-        // Uses Auth Middleware
-    });
+    Route::resource('vacancies', 'VacancyController');
 });
