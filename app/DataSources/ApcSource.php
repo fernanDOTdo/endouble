@@ -61,7 +61,7 @@ class ApcSource implements VacancyRepositoryInterface
      */
     public function search($query)
     {
-        Cache::store('apc')->remember('search.'.md5($query), 30, function() use ($query) {
+        return Cache::store('apc')->remember('search.'.md5($query), 30, function() use ($query) {
             return Vacancy::where('title', 'LIKE', '%'.$query.'%')
                 ->orWhere('content', 'LIKE', '%'.$query.'%')
                 ->orWhere('description', 'LIKE', '%'.$query.'%')
