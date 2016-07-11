@@ -21,7 +21,7 @@ class ApcSource implements VacancyRepositoryInterface
      * @var array
      */
     protected $config = [
-        'name' => 'APC',
+        'name' => 'Apc',
         'description' => 'APC Data Source',
         'priority' => 2,
         'enabled' => false
