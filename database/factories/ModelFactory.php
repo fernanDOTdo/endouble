@@ -19,3 +19,11 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
         'remember_token' => str_random(10),
     ];
 });
+
+$factory->define(App\Vacancy::class, function (Faker\Generator $faker) {
+    return [
+        'title' => $faker->jobTitle,
+        'content' => $faker->realText(),
+        'description' => $faker->company,
+    ];
+});
