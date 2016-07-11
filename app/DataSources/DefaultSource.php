@@ -78,11 +78,11 @@ class DefaultSource implements VacancyRepositoryInterface
      * Search for a vacancy
      *
      * @param int
-     * @param mixed
+     * @return mixed
      */
     public function search($query)
     {
-        Vacancy::where('title', 'LIKE', '%'.$query.'%')
+        return Vacancy::where('title', 'LIKE', '%'.$query.'%')
         ->orWhere('content', 'LIKE', '%'.$query.'%')
         ->orWhere('description', 'LIKE', '%'.$query.'%')
         ->get();
@@ -92,12 +92,16 @@ class DefaultSource implements VacancyRepositoryInterface
      * Save a vacancy
      *
      * @param array
+     * @return Vacancy
      */
     public function save(array $vacancy_data)
     {
+        // Remove _token from vacancy_data
+        unset($vacancy_data['_token']);
         $vacancy = new Vacancy();
         foreach ($vacancy_data as $k => $v) $vacancy->$k = $v;
         $vacancy->save();
+        return $vacancy;
     }
 
 }

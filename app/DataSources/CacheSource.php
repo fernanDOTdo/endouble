@@ -42,7 +42,9 @@ class CacheSource implements VacancyRepositoryInterface
      */
     public function get($vacancy_id)
     {
-        return Cache::store('file')->get('vacancy.'.$vacancy_id);
+        return Cache::store('file')->remember('vacancy.'.$vacancy_id, 30, function() use ($vacancy_id) {
+            return Vacancy::find($vacancy_id);
+        });
     }
 
     /**
@@ -53,9 +55,9 @@ class CacheSource implements VacancyRepositoryInterface
     public function all()
     {
         // Get All the Vacancies from the Cache
-        // (if it can't be found, store it in the Cache for 30 minutes)
-        Cache::store('file')->remember('vacancies', 30, function() {
-            return DB::table('vacancies')->get();
+        // (if it can't be found, get from DB and store it in the Cache for 30 minutes)
+        return Cache::store('file')->remember('vacancies', 30, function() {
+            return  DB::table('vacancies')->get();
         });
     }
 
@@ -66,7 +68,10 @@ class CacheSource implements VacancyRepositoryInterface
      */
     public function delete($vacancy_id)
     {
+        // Delete the single item
         Cache::store('file')->forget('vacancy.'.$vacancy_id);
+        // Remove all from cache (so vacancies cache will be repopulated on the next Request)
+        Cache::store('file')->forget('vacancies');
     }
 
     /**
@@ -77,24 +82,21 @@ class CacheSource implements VacancyRepositoryInterface
      */
     public function update($vacancy_id, array $vacancy_data)
     {
-        // First, remove the data from cache
+        // Just remove the data from cache
         Cache::store('file')->forget('vacancy.'.$vacancy_id);
-        // Get the Vacancy from the Cache
-        // (if it can't be found, store it in the Cache for 30 minutes)
-        Cache::store('file')->remember('vacancy.'.$vacancy_id, 30, function() use ($vacancy_id) {
-            return Vacancy::find($vacancy_id);
-        });
+        // Remove all from cache (so vacancies cache will be repopulated on the next Request)
+        Cache::store('file')->forget('vacancies');
     }
 
     /**
      * Search for a vacancy
      *
      * @param int
-     * @param mixed
+     * @return false
      */
     public function search($query)
     {
-        // Not used
+        return false;
     }
 
     /**
@@ -111,6 +113,8 @@ class CacheSource implements VacancyRepositoryInterface
                 return Vacancy::find($vacancy_data['id']);
             });
         }
+        // Remove all from cache (so vacancies cache will be repopulated on the next Request)
+        Cache::store('file')->forget('vacancies');
     }
 
 }
