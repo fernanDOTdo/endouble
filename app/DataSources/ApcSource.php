@@ -7,24 +7,24 @@ use App\Repositories\VacancyRepositoryInterface;
 use Cache;
 
 /**
- * Class RedisSource
+ * Class ApcSource
  *
  * This is a sample Data Source that only implements the search
  *
  * @package App\DataSources
  */
 
-class RedisSource implements VacancyRepositoryInterface
+class ApcSource implements VacancyRepositoryInterface
 {
     /**
      * Default Data Source Info
      * @var array
      */
     protected $config = [
-        'name' => 'Redis',
-        'description' => 'Redis Data Source',
+        'name' => 'APC',
+        'description' => 'APC Data Source',
         'priority' => 2,
-        'enabled' => true
+        'enabled' => false
     ];
 
     /**
@@ -61,7 +61,7 @@ class RedisSource implements VacancyRepositoryInterface
      */
     public function search($query)
     {
-        Cache::store('redis')->remember('search.'.md5($query), 30, function() use ($query) {
+        Cache::store('apc')->remember('search.'.md5($query), 30, function() use ($query) {
             return Vacancy::where('title', 'LIKE', '%'.$query.'%')
                 ->orWhere('content', 'LIKE', '%'.$query.'%')
                 ->orWhere('description', 'LIKE', '%'.$query.'%')
