@@ -17,7 +17,7 @@ class Sources extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description');
-            $table->tinyInteger('priority');
+            $table->tinyInteger('priority')->index();
             $table->boolean('enabled');
         });
     }
