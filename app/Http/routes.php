@@ -29,9 +29,8 @@ Route::match(['get', 'post'], 'register', function () {
 // Routes for logged users
 Route::group(['middleware' => 'auth'], function () {
 
-    Route::get('/sources', function ()    {
-        // Uses Auth Middleware
-    });
+    Route::resource('sources', 'SourceController', ['only' => ['index', 'edit', 'update']]);
+    Route::get('sources/refresh', ['uses' => 'SourceController@refresh', 'as' => 'sources.refresh']);
 
     Route::get('/vacancies', function () {
         // Uses Auth Middleware
