@@ -11,6 +11,29 @@
 |
 */
 
+// Homepage is just a login page
 Route::get('/', function () {
-    return view('welcome');
+    if(Auth::check()){
+        return redirect('/vacancies');
+    }
+    return view('auth.login');
+});
+
+Route::auth();
+
+// We don't allow new users
+Route::match(['get', 'post'], 'register', function () {
+    return redirect('/')->with('error', 'This feature is disabled.');
+});
+
+// Routes for logged users
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/sources', function ()    {
+        // Uses Auth Middleware
+    });
+
+    Route::get('/vacancies', function () {
+        // Uses Auth Middleware
+    });
 });

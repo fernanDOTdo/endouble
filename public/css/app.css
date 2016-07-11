@@ -1,0 +1,12 @@
+a.navbar-brand{
+    background: url("../images/logo.png") center no-repeat;
+    -webkit-background-size: contain;
+    -moz-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+    text-indent: -9999em;
+    padding: 0;
+}
+h1{
+    text-align: center;
+}
