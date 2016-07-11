@@ -10,3 +10,11 @@ a.navbar-brand{
 h1{
     text-align: center;
 }
+#searchForm{
+    margin-top: -5px;
+}
+#searchForm input{
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+}

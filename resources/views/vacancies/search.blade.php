@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Vacancies')
+@section('title', 'Searching for '.$query)
 
 @section('content')
 <div class="container">
@@ -8,10 +8,10 @@
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Vacancies <strong>from  {{ $source }}</strong>
+                    Searching for {{ $query }} <strong>from  {{ $source }}</strong>
                     <form id="searchForm" class="pull-right form-inline" action="{{ route('vacancies.search') }}" method="GET">
                         <div class="form-group form-group-sm">
-                                <input type="text" class="form-control input-sm" name="q" id="q" placeholder="Search">
+                                <input type="text" class="form-control input-sm" name="q" id="q" placeholder="Search" value="{{ $query }}">
                         </div>
                         <div class="form-group form-group-sm">
                             <button type="submit" class="btn btn-success btn-xs pull-right"><i class="fa fa-search" aria-hidden="true"></i></button>

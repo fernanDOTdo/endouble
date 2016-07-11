@@ -32,5 +32,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('sources', 'SourceController', ['only' => ['index', 'edit', 'update']]);
     Route::get('sources/refresh', ['uses' => 'SourceController@refresh', 'as' => 'sources.refresh']);
 
+    Route::get('vacancies/search', ['uses' => 'VacancyController@search', 'as' => 'vacancies.search']);
     Route::resource('vacancies', 'VacancyController');
 });

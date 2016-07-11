@@ -98,4 +98,24 @@ class VacancyController extends Controller
         $this->vacancy->delete($id);
         return redirect('/vacancies')->with('success', 'Vacancy Deleted');
     }
+
+    /**
+     * Search Vacancies
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function search(Request $request)
+    {
+        $query = $request->get('q');
+        if(empty($query)){
+            return redirect('/vacancies')->with('error', 'Please Type Something');
+        }
+        $vacancies = $this->vacancy->search($query);
+        $data = [
+            'vacancies' => $vacancies,
+            'source' => $this->vacancy->source(),
+            'query' => $query
+        ];
+        return view('vacancies.search', $data);
+    }
 }
