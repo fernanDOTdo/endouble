@@ -98,6 +98,7 @@ class SourceRepository implements SourceRepositoryInterface
      *
      * @param int
      * @param array
+     * @return void|false
      */
     public function update($source_id, array $source_data)
     {
@@ -105,6 +106,10 @@ class SourceRepository implements SourceRepositoryInterface
         // So we have to set it as false
         if(!isset($source_data['enabled'])){
             $source_data['enabled'] = false;
+        }
+        // Default Source can't be disabled
+        if('Default' == $this->get($source_id)->name && !$source_data['enabled']){
+            return false;
         }
         // Update the Data Source in DB
         Source::withoutGlobalScopes()->find($source_id)->update($source_data);
