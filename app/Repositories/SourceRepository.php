@@ -104,12 +104,8 @@ class SourceRepository implements SourceRepositoryInterface
     {
         // When the "enabled" checkbox is unchecked, nothing is sent to the server
         // So we have to set it as false
-        if(!isset($source_data['enabled'])){
+        if(!isset($source_data['enabled']) && 'Default' != $this->get($source_id)->name){
             $source_data['enabled'] = false;
-        }
-        // Default Source can't be disabled
-        if('Default' == $this->get($source_id)->name && !$source_data['enabled']){
-            return false;
         }
         // Update the Data Source in DB
         Source::withoutGlobalScopes()->find($source_id)->update($source_data);
