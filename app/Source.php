@@ -20,7 +20,7 @@ class Source extends Model
      * @var array
      */
     protected $fillable = [
-        'priority', 'enabled'
+        'priority', 'enabled',
     ];
 
     /**
@@ -32,8 +32,6 @@ class Source extends Model
 
     /**
      * The "booting" method of the Source.
-     *
-     * @return void
      */
     protected static function boot()
     {

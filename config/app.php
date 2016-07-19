@@ -159,7 +159,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         App\Providers\RepositoriesServiceProvider::class,
 
-        /**
+        /*
          * Third-party Service Providers
          */
         Barryvdh\Debugbar\ServiceProvider::class,

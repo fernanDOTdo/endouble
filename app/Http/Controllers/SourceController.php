@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Repositories\SourceRepositoryInterface;
 
 /**
- * Class SourceController
- * @package App\Http\Controllers
+ * Class SourceController.
  */
 class SourceController extends Controller
 {
     protected $source;
 
     /**
-     * SourceController constructor
+     * SourceController constructor.
      *
      * @param SourceRepositoryInterface $source
      */
@@ -26,7 +23,7 @@ class SourceController extends Controller
     }
 
     /**
-     * List all sources
+     * List all sources.
      *
      * @return mixed
      */
@@ -35,21 +32,23 @@ class SourceController extends Controller
         // Get all Sources in DB
         $sources = $this->source->all();
         // If it's empty, lets run the refresh
-        if($sources->isEmpty()){
+        if ($sources->isEmpty()) {
             $this->source->refresh();
             // Try to get all Sources again
             $sources = $this->source->all();
         }
         $data = [
-            'sources' => $sources
+            'sources' => $sources,
         ];
+
         return view('sources.index', $data);
     }
 
     /**
-     * Edit the Source
+     * Edit the Source.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit($id)
@@ -58,26 +57,29 @@ class SourceController extends Controller
     }
 
     /**
-     * Update the specified Source
+     * Update the specified Source.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
         $this->source->update($id, $request->all());
+
         return redirect('/sources')->with('success', 'Data Source Updated');
     }
 
     /**
-     * Refresh the Sources From Disk
+     * Refresh the Sources From Disk.
      *
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function refresh()
     {
         $this->source->refresh();
+
         return redirect('/sources')->with('success', 'Data Sources Reloaded');
     }
 }

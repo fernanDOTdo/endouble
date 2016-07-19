@@ -3,40 +3,40 @@
 namespace App\Repositories;
 
 /**
- * Interface SourceRepository
+ * Interface SourceRepository.
  */
 interface SourceRepositoryInterface
 {
     /**
-     * Get All Enabled Data Sources
+     * Get All Enabled Data Sources.
      *
      * @return array
      */
     public function getSources();
 
     /**
-     * Get a source by ID
+     * Get a source by ID.
      *
      * @param int
      */
     public function get($source_id);
 
     /**
-     * Get all sources
+     * Get all sources.
      *
      * @return mixed
      */
     public function all();
 
     /**
-     * Refresh all sources
+     * Refresh all sources.
      *
      * @return bool
      */
     public function refresh();
 
     /**
-     * Update a source
+     * Update a source.
      *
      * @param int
      * @param array
@@ -44,7 +44,7 @@ interface SourceRepositoryInterface
     public function update($source_id, array $source_data);
 
     /**
-     * Save a source
+     * Save a source.
      *
      * @param array
      */

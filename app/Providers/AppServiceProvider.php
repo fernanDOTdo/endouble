@@ -10,8 +10,6 @@ class AppServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap any application services.
-     *
-     * @return void
      */
     public function boot()
     {
@@ -23,13 +21,10 @@ class AppServiceProvider extends ServiceProvider
         Source::updated(function ($source) {
             Cache::forget('source.all');
         });
-
     }
 
     /**
      * Register any application services.
-     *
-     * @return void
      */
     public function register()
     {

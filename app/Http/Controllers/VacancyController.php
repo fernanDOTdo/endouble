@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Repositories\VacancyRepositoryInterface;
 
 /**
- * Class VacancyController
- * @package App\Http\Controllers
+ * Class VacancyController.
  */
 class VacancyController extends Controller
 {
     protected $vacancy;
 
     /**
-     * SourceController constructor
+     * SourceController constructor.
      *
      * @param VacancyRepositoryInterface $vacancy
      */
@@ -26,7 +23,7 @@ class VacancyController extends Controller
     }
 
     /**
-     * List all vacancies
+     * List all vacancies.
      *
      * @return mixed
      */
@@ -36,15 +33,17 @@ class VacancyController extends Controller
         $vacancies = $this->vacancy->all();
         $data = [
             'vacancies' => $vacancies,
-            'source' => $this->vacancy->source()
+            'source' => $this->vacancy->source(),
         ];
+
         return view('vacancies.index', $data);
     }
 
     /**
-     * Edit the Vacancy
+     * Edit the Vacancy.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit($id)
@@ -53,20 +52,22 @@ class VacancyController extends Controller
     }
 
     /**
-     * Update the specified Vacancy
+     * Update the specified Vacancy.
      *
-     * @param  Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param int     $id
+     *
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function update(Request $request, $id)
     {
         $this->vacancy->update($id, $request->all());
+
         return redirect('/vacancies')->with('success', 'Vacancy Updated');
     }
 
     /**
-     * Show the form for creating a new Vacancy
+     * Show the form for creating a new Vacancy.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -76,46 +77,51 @@ class VacancyController extends Controller
     }
 
     /**
-     * Store a newly created Vacancy
+     * Store a newly created Vacancy.
      *
-     * @param Request  $request
+     * @param Request $request
+     *
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $this->vacancy->save($request->all());
+
         return redirect('/vacancies')->with('success', 'Vacancy Created');
     }
 
     /**
-     * Delete the specified Vacancy
+     * Delete the specified Vacancy.
      *
-     * @param  int  $id
+     * @param int $id
+     *
      * @return \Illuminate\Routing\Redirector|\Illuminate\Http\RedirectResponse
      */
     public function destroy($id)
     {
         $this->vacancy->delete($id);
+
         return redirect('/vacancies')->with('success', 'Vacancy Deleted');
     }
 
     /**
-     * Search Vacancies
+     * Search Vacancies.
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function search(Request $request)
     {
         $query = $request->get('q');
-        if(empty($query)){
+        if (empty($query)) {
             return redirect('/vacancies')->with('error', 'Please Type Something');
         }
         $vacancies = $this->vacancy->search($query);
         $data = [
             'vacancies' => $vacancies,
             'source' => $this->vacancy->source(),
-            'query' => $query
+            'query' => $query,
         ];
+
         return view('vacancies.search', $data);
     }
 }

@@ -13,9 +13,10 @@
 
 // Homepage is just a login page
 Route::get('/', function () {
-    if(Auth::check()){
+    if (Auth::check()) {
         return redirect('/vacancies');
     }
+
     return view('auth.login');
 });
 

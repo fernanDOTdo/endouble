@@ -6,35 +6,37 @@ use App\Source;
 use Cache;
 
 /**
- * Source Repository
+ * Source Repository.
  */
-
 class SourceRepository implements SourceRepositoryInterface
 {
     /**
-     * Get All Enabled Data Sources
+     * Get All Enabled Data Sources.
      *
      * @return array
      */
     public function getSources()
     {
-        $sources = Cache::get('source.all', function() {
+        $sources = Cache::get('source.all', function () {
             $allSources = Source::orderBy('priority')->get();
-            if($allSources){
+            if ($allSources) {
                 $classSources = [];
-                foreach ($allSources as $source){
-                    $classSources[] = 'App\\DataSources\\' . $source->name .'Source';
+                foreach ($allSources as $source) {
+                    $classSources[] = 'App\\DataSources\\'.$source->name.'Source';
                 }
                 Cache::forever('source.all', json_encode($classSources));
+
                 return json_encode($classSources);
             }
         });
+
         return json_decode($sources);
     }
     /**
-     * Get a source by ID
+     * Get a source by ID.
      *
      * @param int
+     *
      * @return Source
      */
     public function get($source_id)
@@ -43,7 +45,7 @@ class SourceRepository implements SourceRepositoryInterface
     }
 
     /**
-     * Get all sources
+     * Get all sources.
      *
      * @return mixed
      */
@@ -53,7 +55,7 @@ class SourceRepository implements SourceRepositoryInterface
     }
 
     /**
-     * Refresh all sources
+     * Refresh all sources.
      *
      * @return bool
      */
@@ -68,43 +70,46 @@ class SourceRepository implements SourceRepositoryInterface
         // Get all files in DataSources directory
         $sources = scandir($sources_path);
         // If we found some files in the folder
-        if(is_array($sources)){
+        if (is_array($sources)) {
             // Loop trough the files
-            foreach ($sources as $source){
+            foreach ($sources as $source) {
                 // If it's PHP file
-                if(strpos($source, '.php') !== false){
+                if (strpos($source, '.php') !== false) {
                     // Initiate the Data Source class
                     $source_className = $sources_namespace.substr($source, 0, -4);
-                    $source_class = new $source_className;
+                    $source_class = new $source_className();
                     // If the class initiation was good
-                    if(is_object($source_class)){
+                    if (is_object($source_class)) {
                         // Get the config data to insert in DB
                         $source_config = $source_class->getConfig();
                         // If the config data is there
-                        if(is_array($source_config)){
+                        if (is_array($source_config)) {
                             // Save the Source
                             $this->save($source_config);
                         }
                     }
                 }
             }
+
             return true;
         }
+
         return false;
     }
 
     /**
-     * Update a source
+     * Update a source.
      *
      * @param int
      * @param array
+     *
      * @return void|false
      */
     public function update($source_id, array $source_data)
     {
         // When the "enabled" checkbox is unchecked, nothing is sent to the server
         // So we have to set it as false
-        if(!isset($source_data['enabled']) && 'Default' != $this->get($source_id)->name){
+        if (!isset($source_data['enabled']) && 'Default' != $this->get($source_id)->name) {
             $source_data['enabled'] = false;
         }
         // Update the Data Source in DB
@@ -112,14 +117,16 @@ class SourceRepository implements SourceRepositoryInterface
     }
 
     /**
-     * Save a source
+     * Save a source.
      *
      * @param array
      */
     public function save(array $source_data)
     {
         $source = new Source();
-        foreach ($source_data as $k => $v) $source->$k = $v;
+        foreach ($source_data as $k => $v) {
+            $source->$k = $v;
+        }
         $source->save();
     }
 }

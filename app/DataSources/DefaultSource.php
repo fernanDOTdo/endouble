@@ -6,36 +6,37 @@ use App\Vacancy;
 use App\Repositories\VacancyRepositoryInterface;
 
 /**
- * Default Source
+ * Default Source.
  */
-
 class DefaultSource implements VacancyRepositoryInterface
 {
     /**
-     * Default Data Source Info
+     * Default Data Source Info.
+     *
      * @var array
      */
     protected $config = [
         'name' => 'Default',
         'description' => 'Default Data Source',
         'priority' => 100,
-        'enabled' => true
+        'enabled' => true,
     ];
 
     /**
-     * Get the Data Source Config Info
+     * Get the Data Source Config Info.
      *
      * @return array
      */
-    public function getConfig(){
+    public function getConfig()
+    {
         return $this->config;
     }
 
-
     /**
-     * Get a vacancy by ID
+     * Get a vacancy by ID.
      *
      * @param int
+     *
      * @return Vacancy
      */
     public function get($vacancy_id)
@@ -44,7 +45,7 @@ class DefaultSource implements VacancyRepositoryInterface
     }
 
     /**
-     * Get all vacancies
+     * Get all vacancies.
      *
      * @return mixed
      */
@@ -54,7 +55,7 @@ class DefaultSource implements VacancyRepositoryInterface
     }
 
     /**
-     * Delete a vacancy
+     * Delete a vacancy.
      *
      * @param int
      */
@@ -64,7 +65,7 @@ class DefaultSource implements VacancyRepositoryInterface
     }
 
     /**
-     * Update a vacancy
+     * Update a vacancy.
      *
      * @param int
      * @param array
@@ -75,9 +76,10 @@ class DefaultSource implements VacancyRepositoryInterface
     }
 
     /**
-     * Search for a vacancy
+     * Search for a vacancy.
      *
      * @param int
+     *
      * @return mixed
      */
     public function search($query)
@@ -89,9 +91,10 @@ class DefaultSource implements VacancyRepositoryInterface
     }
 
     /**
-     * Save a vacancy
+     * Save a vacancy.
      *
      * @param array
+     *
      * @return Vacancy
      */
     public function save(array $vacancy_data)
@@ -99,9 +102,11 @@ class DefaultSource implements VacancyRepositoryInterface
         // Remove _token from vacancy_data
         unset($vacancy_data['_token']);
         $vacancy = new Vacancy();
-        foreach ($vacancy_data as $k => $v) $vacancy->$k = $v;
+        foreach ($vacancy_data as $k => $v) {
+            $vacancy->$k = $v;
+        }
         $vacancy->save();
+
         return $vacancy;
     }
-
 }
